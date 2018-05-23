@@ -12,7 +12,7 @@
 #import "SPUDownloadData.h"
 #import "SPULocalCacheDirectory.h"
 #import "SUErrors.h"
-
+#import "SPUProxy.h"
 #include "AppKitPrevention.h"
 
 @interface SPUDownloaderDeprecated () <NSURLDownloadDelegate>

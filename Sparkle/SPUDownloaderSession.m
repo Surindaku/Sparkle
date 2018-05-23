@@ -12,7 +12,6 @@
 #import "SPULocalCacheDirectory.h"
 #import "SUErrors.h"
 #import "SPUDownloadData.h"
-
 #include "AppKitPrevention.h"
 
 @interface SPUDownloaderSession () <NSURLSessionDelegate>
@@ -27,19 +26,41 @@
 @synthesize downloadSession = _downloadSession;
 @synthesize download = _download;
 
-- (void)startDownloadWithRequest:(SPUURLRequest *)request
+- (void)startDownloadWithRequest:(SPUURLRequest *)request proxy:(SUProxy)proxy
 {
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
+    /*
+     let sessionConfiguration = URLSessionConfiguration.default
+     sessionConfiguration.connectionProxyDictionary = [
+     kCFNetworkProxiesHTTPEnable as AnyHashable: true,
+     kCFNetworkProxiesHTTPPort as AnyHashable: 999, //myPortInt
+     kCFNetworkProxiesHTTPProxy as AnyHashable: "myProxyUrlString"
+     ]
+     let session = URLSession(configuration: sessionConfiguration)
+     */
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    if (proxy.hasProxy) {
+        NSMutableDictionary *data=[NSMutableDictionary dictionaryWithDictionary:@{(__bridge NSString *)kCFNetworkProxiesHTTPEnable  : @1,  (__bridge NSString *)kCFNetworkProxiesHTTPSEnable : @1}];
+        data[(__bridge NSString *)kCFNetworkProxiesHTTPSProxy] = proxy.host;
+        data[(__bridge NSString *)kCFNetworkProxiesHTTPSPort]= proxy.port;
+        data[(__bridge NSString *)kCFProxyUsernameKey]= proxy.user;
+        data[(__bridge NSString *)kCFProxyPasswordKey]= proxy.pass;
+        configuration.connectionProxyDictionary = data;
+    }
+
+    
     queue.maxConcurrentOperationCount = 1;
     self.downloadSession = [NSURLSession
-                             sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                             sessionWithConfiguration:configuration
                              delegate:self
                              delegateQueue:queue];
     self.download = [self.downloadSession downloadTaskWithRequest:request.request];
     [self.download resume];
 }
 
-- (void)startPersistentDownloadWithRequest:(SPUURLRequest *)request bundleIdentifier:(NSString *)bundleIdentifier desiredFilename:(NSString *)desiredFilename
+- (void)startPersistentDownloadWithRequest:(SPUURLRequest *)request bundleIdentifier:(NSString *)bundleIdentifier desiredFilename:(NSString *)desiredFilename proxy:(SUProxy)proxy
 {
    dispatch_async(dispatch_get_main_queue(), ^{
         if (self.download == nil && self.delegate != nil) {
@@ -51,12 +72,12 @@
             self.desiredFilename = desiredFilename;
             self.bundleIdentifier = bundleIdentifier;
             
-            [self startDownloadWithRequest:request];
+            [self startDownloadWithRequest:request proxy:proxy];
         }
     });
 }
 
-- (void)startTemporaryDownloadWithRequest:(SPUURLRequest *)request
+- (void)startTemporaryDownloadWithRequest:(SPUURLRequest *)request proxy:(SUProxy)proxy
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.download == nil && self.delegate != nil) {
@@ -65,7 +86,7 @@
             self.disabledAutomaticTermination = YES;
             
             self.mode = SPUDownloadModeTemporary;
-            [self startDownloadWithRequest:request];
+            [self startDownloadWithRequest:request proxy:proxy];
         }
     });
 }

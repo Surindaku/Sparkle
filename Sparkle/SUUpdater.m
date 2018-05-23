@@ -25,6 +25,7 @@
 #include <SystemConfiguration/SystemConfiguration.h>
 #import "SUSystemProfiler.h"
 #import "SUSystemUpdateInfo.h"
+#import "SPUProxy.h"
 
 NSString *const SUUpdaterDidFinishLoadingAppCastNotification = @"SUUpdaterDidFinishLoadingAppCastNotification";
 NSString *const SUUpdaterDidFindValidUpdateNotification = @"SUUpdaterDidFindValidUpdateNotification";
@@ -36,6 +37,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
 @interface SUUpdater () <SUUpdaterPrivate>
 @property (strong) NSTimer *checkTimer;
 @property (strong) NSBundle *sparkleBundle;
+@property SUProxy proxy;
 
 - (instancetype)initForBundle:(NSBundle *)bundle;
 - (void)startUpdateCycle;
@@ -64,6 +66,7 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
 @synthesize sparkleBundle;
 @synthesize decryptionPassword;
 @synthesize updateLastCheckedDate;
+@synthesize proxy;
 
 static NSMutableDictionary *sharedUpdaters = nil;
 static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaultsObservationContext";
@@ -362,7 +365,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 
     NSURL *theFeedURL = [self parameterizedFeedURL];
     if (theFeedURL) // Use a NIL URL to cancel quietly.
-        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host];
+        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host proxy: self.proxy];
     else
         [self.driver abortUpdate];
 }
@@ -474,9 +477,42 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     NSString *castUrlStr = [appcastString stringByTrimmingCharactersInSet:quoteSet];
     if (!castUrlStr || [castUrlStr length] == 0)
         return nil;
-    else
+    else if (self.basicDomain != nil) {
+        
+        NSRange protocolRange = [self.basicDomain rangeOfString:@"://"];
+        NSURL *previous = [NSURL URLWithString:castUrlStr];
+        NSURL *basic = [NSURL URLWithString:self.basicDomain];
+        NSString *n = [castUrlStr stringByReplacingOccurrencesOfString:previous.host withString:basic.host];
+        
+        if (protocolRange.location != NSNotFound) {
+            NSRange nRange = [castUrlStr rangeOfString:@"://"];
+            n = [n stringByReplacingCharactersInRange:NSMakeRange(0, nRange.location + nRange.length) withString:[self.basicDomain substringWithRange:NSMakeRange(0, protocolRange.location + protocolRange.length)]];
+        }
+        return [NSURL URLWithString:n];
+    }
+     else
         return [NSURL URLWithString:castUrlStr];
+    
 }
+
+-(SUProxy)proxySettings {
+    return self.proxy;
+}
+
+-(void)updateProxy:(SUProxy)p {
+    self.proxy = p;
+    [self checkForUpdates:self];
+}
+
+-(void)setBasicDomain:(NSString *)bd {
+    NSRange protocolRange = [bd rangeOfString:@"://"];
+    NSString *modified = bd;
+    if (bd != nil && protocolRange.location == NSNotFound) {
+        modified = [NSString stringWithFormat:@"https://%@", bd];
+    }
+    self->_basicDomain = modified;
+}
+
 
 - (NSString *)userAgentString
 {

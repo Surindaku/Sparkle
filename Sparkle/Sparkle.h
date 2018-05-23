@@ -20,7 +20,7 @@
 #import "SUVersionComparisonProtocol.h"
 #import "SUVersionDisplayProtocol.h"
 #import "SUErrors.h"
-
+#import "SPUProxy.h"
 #import "SPUDownloader.h"
 #import "SPUDownloaderDelegate.h"
 #import "SPUDownloaderDeprecated.h"

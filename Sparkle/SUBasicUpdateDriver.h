@@ -13,14 +13,14 @@
 #import "SPUDownloader.h"
 #import "SPUDownloaderDelegate.h"
 
-@class SUAppcast, SUAppcastItem, SUHost, SPUDownloadData;
+@class SUAppcast, SUAppcastItem, SUHost, SPUDownloadData, SPUProxy;
 @interface SUBasicUpdateDriver : SUUpdateDriver <SPUDownloaderDelegate>
 
 @property (strong, readonly) SUAppcastItem *updateItem;
 @property (strong, readonly) SPUDownloader *download;
 @property (copy, readonly) NSString *downloadPath;
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)host;
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost proxy:(SUProxy)proxy;
 
 - (BOOL)isItemNewer:(SUAppcastItem *)ui;
 + (BOOL)hostSupportsItem:(SUAppcastItem *)ui;

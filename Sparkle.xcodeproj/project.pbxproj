@@ -277,6 +277,8 @@
 		767B61AC1972D488004E0C3C /* SUGuidedPackageInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = 767B61AA1972D488004E0C3C /* SUGuidedPackageInstaller.h */; };
 		767B61AD1972D488004E0C3C /* SUGuidedPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 767B61AB1972D488004E0C3C /* SUGuidedPackageInstaller.m */; };
 		767B61AE1972D488004E0C3C /* SUGuidedPackageInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = 767B61AB1972D488004E0C3C /* SUGuidedPackageInstaller.m */; };
+		9F3F412B2088A0ED00004DA5 /* SPUProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F3F41292088A0ED00004DA5 /* SPUProxy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F3F412C2088A0ED00004DA5 /* SPUProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3F412A2088A0ED00004DA5 /* SPUProxy.m */; };
 		A5BF4F1D1BC7668B007A052A /* SUTestWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = A5BF4F1C1BC7668B007A052A /* SUTestWebServer.m */; };
 		C23E885B1BE7B24F0050BB73 /* SparkleTestCodeSignApp.enc.dmg in Resources */ = {isa = PBXBuildFile; fileRef = C23E88591BE7AF890050BB73 /* SparkleTestCodeSignApp.enc.dmg */; };
 		E1545EC51E1D7E0200FAECE8 /* SUTouchBarButtonGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E1545EC31E1D7E0200FAECE8 /* SUTouchBarButtonGroup.h */; };
@@ -834,6 +836,8 @@
 		767B61AB1972D488004E0C3C /* SUGuidedPackageInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUGuidedPackageInstaller.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Sparkle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sparkle-Info.plist"; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* Sparkle.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F3F41292088A0ED00004DA5 /* SPUProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPUProxy.h; sourceTree = "<group>"; };
+		9F3F412A2088A0ED00004DA5 /* SPUProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPUProxy.m; sourceTree = "<group>"; };
 		A5BF4F1B1BC7668B007A052A /* SUTestWebServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SUTestWebServer.h; sourceTree = "<group>"; };
 		A5BF4F1C1BC7668B007A052A /* SUTestWebServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUTestWebServer.m; sourceTree = "<group>"; };
 		C23E88591BE7AF890050BB73 /* SparkleTestCodeSignApp.enc.dmg */ = {isa = PBXFileReference; lastKnownFileType = file; path = SparkleTestCodeSignApp.enc.dmg; sourceTree = "<group>"; };
@@ -1133,6 +1137,8 @@
 				34074B951FEABD23001CB3A5 /* SPULocalCacheDirectory.m */,
 				34074B991FEABD49001CB3A5 /* SPUURLRequest.h */,
 				34074B981FEABD48001CB3A5 /* SPUURLRequest.m */,
+				9F3F41292088A0ED00004DA5 /* SPUProxy.h */,
+				9F3F412A2088A0ED00004DA5 /* SPUProxy.m */,
 			);
 			name = Downloader;
 			sourceTree = "<group>";
@@ -1437,9 +1443,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61299B3609CB04E000B7442F /* Sparkle.h in Headers */,
+				9F3F412B2088A0ED00004DA5 /* SPUProxy.h in Headers */,
 				723B25301CEAB3A600909873 /* bscommon.h in Headers */,
 				611142E910FB1BE5009810AA /* bspatch.h in Headers */,
-				61299B3609CB04E000B7442F /* Sparkle.h in Headers */,
 				61B5FC0D09C4FC8200B25A18 /* SUAppcast.h in Headers */,
 				61B5FC7009C51F4A00B25A18 /* SUAppcastItem.h in Headers */,
 				34074BA71FEAC417001CB3A5 /* SPUDownloaderDeprecated.h in Headers */,
@@ -2114,6 +2121,7 @@
 				612DCBB00D488BC60015DBEA /* SUUpdatePermissionPrompt.m in Sources */,
 				7205C4321E1215AD00E370AE /* SUUpdatePermissionResponse.m in Sources */,
 				61B5F8EE09C4CE3C00B25A18 /* SUUpdater.m in Sources */,
+				9F3F412C2088A0ED00004DA5 /* SPUProxy.m in Sources */,
 				729924741DF3478A00DBCDF5 /* SUUpdateValidator.m in Sources */,
 				61A354560DF113C70076ECB1 /* SUUserInitiatedUpdateDriver.m in Sources */,
 			);
@@ -2406,41 +2414,23 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1420DF4B1962329200203BB0 /* Debug */ = {
+		1420DF4C1962329200203BB0 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
-			name = Debug;
+			name = "Debug Hockeyapp";
 		};
-		1420DF4C1962329200203BB0 /* Release */ = {
+		14732BC81960F69300593899 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		14732BC71960F69300593899 /* Debug */ = {
+		14950062195FB89500BC5B5B /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 			};
-			name = Debug;
-		};
-		14732BC81960F69300593899 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
-		};
-		14950061195FB89500BC5B5B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		14950062195FB89500BC5B5B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
 		149B785A1B7D398100D7D62C /* Coverage */ = {
 			isa = XCBuildConfiguration;
@@ -2507,19 +2497,7 @@
 			};
 			name = Coverage;
 		};
-		1DEB91AE08733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941CA0D94A70100DD942E /* ConfigFrameworkDebug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
-		1DEB91AF08733DA50010E9CD /* Release */ = {
+		1DEB91AF08733DA50010E9CD /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
@@ -2528,43 +2506,22 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				SWIFT_VERSION = 3.0;
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		1DEB91B208733DA50010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941CF0D94A70100DD942E /* ConfigCommonDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		1DEB91B308733DA50010E9CD /* Release */ = {
+		1DEB91B308733DA50010E9CD /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
 			buildSettings = {
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		55C14BBB136EEF1500649790 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941D30D94A70100DD942E /* ConfigRelaunchDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		55C14BBC136EEF1500649790 /* Release */ = {
+		55C14BBC136EEF1500649790 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
-		};
-		5AA96C591E0AE0DC00CA4346 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7205C4351E12CA7000E370AE /* ConfigGenerateAppcastDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
+			name = "Debug Hockeyapp";
 		};
 		5AA96C5A1E0AE0DC00CA4346 /* Coverage */ = {
 			isa = XCBuildConfiguration;
@@ -2573,63 +2530,33 @@
 			};
 			name = Coverage;
 		};
-		5AA96C5B1E0AE0DC00CA4346 /* Release */ = {
+		5AA96C5B1E0AE0DC00CA4346 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		5D06E8D20FD68C7D005AE3F6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D06E8F20FD68D21005AE3F6 /* ConfigBinaryDeltaDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		5D06E8D30FD68C7D005AE3F6 /* Release */ = {
+		5D06E8D30FD68C7D005AE3F6 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		612279DB0DB5470300AB99EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA3AAF3A1050B273004B3130 /* ConfigUnitTestDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		612279DC0DB5470300AB99EA /* Release */ = {
+		612279DC0DB5470300AB99EA /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
 		};
-		61B5F90609C4CEE300B25A18 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA1941CB0D94A70100DD942E /* ConfigTestAppDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
-		};
-		61B5F90709C4CEE300B25A18 /* Release */ = {
+		61B5F90709C4CEE300B25A18 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
-		};
-		722954B81D04ADAF00ECF9CA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
-			buildSettings = {
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
+			name = "Debug Hockeyapp";
 		};
 		722954B91D04ADAF00ECF9CA /* Coverage */ = {
 			isa = XCBuildConfiguration;
@@ -2640,21 +2567,14 @@
 			};
 			name = Coverage;
 		};
-		722954BA1D04ADAF00ECF9CA /* Release */ = {
+		722954BA1D04ADAF00ECF9CA /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
 			buildSettings = {
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
-			name = Release;
-		};
-		726B2B641C645FC900388755 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 729F10FF1C65A9B500DFCCC5 /* ConfigUITestDebug.xcconfig */;
-			buildSettings = {
-			};
-			name = Debug;
+			name = "Debug Hockeyapp";
 		};
 		726B2B651C645FC900388755 /* Coverage */ = {
 			isa = XCBuildConfiguration;
@@ -2663,12 +2583,276 @@
 			};
 			name = Coverage;
 		};
-		726B2B661C645FC900388755 /* Release */ = {
+		726B2B661C645FC900388755 /* Debug Hockeyapp */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
 			buildSettings = {
 			};
-			name = Release;
+			name = "Debug Hockeyapp";
+		};
+		9F0BCDA12087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
+			buildSettings = {
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA22087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA32087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA42087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA52087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA62087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA72087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA82087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDA92087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDAA2087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDAB2087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
+			buildSettings = {
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDAC2087BB8D001D8D8A /* Release Hockeyapp */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release Hockeyapp";
+		};
+		9F0BCDAD2087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
+			buildSettings = {
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDAE2087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDAF2087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB02087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB12087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB22087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB32087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB42087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB52087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB62087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB72087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
+			buildSettings = {
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB82087BB96001D8D8A /* Release AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Release AppStore";
+		};
+		9F0BCDB92087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
+			buildSettings = {
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBA2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				SWIFT_VERSION = 3.0;
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBB2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBC2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBD2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBE2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDBF2087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDC02087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDC12087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDC22087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDC32087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
+			buildSettings = {
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = "Debug AppStore";
+		};
+		9F0BCDC42087BE41001D8D8A /* Debug AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = "Debug AppStore";
 		};
 /* End XCBuildConfiguration section */
 
@@ -2676,122 +2860,146 @@
 		1420DF4A1962329200203BB0 /* Build configuration list for PBXLegacyTarget "Documentation" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1420DF4B1962329200203BB0 /* Debug */,
 				149B78611B7D398100D7D62C /* Coverage */,
-				1420DF4C1962329200203BB0 /* Release */,
+				1420DF4C1962329200203BB0 /* Debug Hockeyapp */,
+				9F0BCDC02087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA82087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB42087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		14732BC61960F69300593899 /* Build configuration list for PBXLegacyTarget "Distribution" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14732BC71960F69300593899 /* Debug */,
 				149B78601B7D398100D7D62C /* Coverage */,
-				14732BC81960F69300593899 /* Release */,
+				14732BC81960F69300593899 /* Debug Hockeyapp */,
+				9F0BCDBF2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA72087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB32087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		14950060195FB89500BC5B5B /* Build configuration list for PBXAggregateTarget "All" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				14950061195FB89500BC5B5B /* Debug */,
 				149B78621B7D398100D7D62C /* Coverage */,
-				14950062195FB89500BC5B5B /* Release */,
+				14950062195FB89500BC5B5B /* Debug Hockeyapp */,
+				9F0BCDC12087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA92087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB52087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Sparkle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91AE08733DA50010E9CD /* Debug */,
 				149B785B1B7D398100D7D62C /* Coverage */,
-				1DEB91AF08733DA50010E9CD /* Release */,
+				1DEB91AF08733DA50010E9CD /* Debug Hockeyapp */,
+				9F0BCDBA2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA22087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDAE2087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Sparkle" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB91B208733DA50010E9CD /* Debug */,
 				149B785A1B7D398100D7D62C /* Coverage */,
-				1DEB91B308733DA50010E9CD /* Release */,
+				1DEB91B308733DA50010E9CD /* Debug Hockeyapp */,
+				9F0BCDB92087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA12087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDAD2087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		55C14BBE136EEF1500649790 /* Build configuration list for PBXNativeTarget "Autoupdate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				55C14BBB136EEF1500649790 /* Debug */,
 				149B785F1B7D398100D7D62C /* Coverage */,
-				55C14BBC136EEF1500649790 /* Release */,
+				55C14BBC136EEF1500649790 /* Debug Hockeyapp */,
+				9F0BCDBE2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA62087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB22087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		5AA96C5C1E0AE0DC00CA4346 /* Build configuration list for PBXNativeTarget "generate_appcast" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5AA96C591E0AE0DC00CA4346 /* Debug */,
 				5AA96C5A1E0AE0DC00CA4346 /* Coverage */,
-				5AA96C5B1E0AE0DC00CA4346 /* Release */,
+				5AA96C5B1E0AE0DC00CA4346 /* Debug Hockeyapp */,
+				9F0BCDC42087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDAC2087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB82087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		5D06E8DA0FD68C95005AE3F6 /* Build configuration list for PBXNativeTarget "BinaryDelta" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5D06E8D20FD68C7D005AE3F6 /* Debug */,
 				149B785E1B7D398100D7D62C /* Coverage */,
-				5D06E8D30FD68C7D005AE3F6 /* Release */,
+				5D06E8D30FD68C7D005AE3F6 /* Debug Hockeyapp */,
+				9F0BCDBD2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA52087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB12087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		612279DD0DB5470300AB99EA /* Build configuration list for PBXNativeTarget "Sparkle Unit Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				612279DB0DB5470300AB99EA /* Debug */,
 				149B785D1B7D398100D7D62C /* Coverage */,
-				612279DC0DB5470300AB99EA /* Release */,
+				612279DC0DB5470300AB99EA /* Debug Hockeyapp */,
+				9F0BCDBC2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA42087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB02087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		61B5F90509C4CEE300B25A18 /* Build configuration list for PBXNativeTarget "Sparkle Test App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				61B5F90609C4CEE300B25A18 /* Debug */,
 				149B785C1B7D398100D7D62C /* Coverage */,
-				61B5F90709C4CEE300B25A18 /* Release */,
+				61B5F90709C4CEE300B25A18 /* Debug Hockeyapp */,
+				9F0BCDBB2087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDA32087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDAF2087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		722954BB1D04ADAF00ECF9CA /* Build configuration list for PBXNativeTarget "fileop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				722954B81D04ADAF00ECF9CA /* Debug */,
 				722954B91D04ADAF00ECF9CA /* Coverage */,
-				722954BA1D04ADAF00ECF9CA /* Release */,
+				722954BA1D04ADAF00ECF9CA /* Debug Hockeyapp */,
+				9F0BCDC32087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDAB2087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB72087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 		726B2B671C645FC900388755 /* Build configuration list for PBXNativeTarget "UI Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				726B2B641C645FC900388755 /* Debug */,
 				726B2B651C645FC900388755 /* Coverage */,
-				726B2B661C645FC900388755 /* Release */,
+				726B2B661C645FC900388755 /* Debug Hockeyapp */,
+				9F0BCDC22087BE41001D8D8A /* Debug AppStore */,
+				9F0BCDAA2087BB8D001D8D8A /* Release Hockeyapp */,
+				9F0BCDB62087BB96001D8D8A /* Release AppStore */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Coverage;
 		};
 /* End XCConfigurationList section */
 	};

@@ -55,9 +55,9 @@
 
 @synthesize updateValidator = _updateValidator;
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost proxy:(SUProxy)proxy
 {
-    [super checkForUpdatesAtURL:URL host:aHost];
+    [super checkForUpdatesAtURL:URL host:aHost proxy:proxy];
 	if ([aHost isRunningOnReadOnlyVolume])
 	{
         [self abortUpdateWithError:[NSError errorWithDomain:SUSparkleErrorDomain code:SURunningFromDiskImageError userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:SULocalizedString(@"%1$@ can't be updated, because it was opened from a read-only or a temporary location. Use Finder to copy %1$@ to the Applications folder, relaunch it from there, and try again.", nil), [aHost name]] }]];
@@ -68,8 +68,10 @@
 
     id<SUUpdaterPrivate> updater = self.updater;
     [appcast setUserAgentString:[updater userAgentString]];
+    
+    [appcast setBasicDomain:[updater basicDomain]];
     [appcast setHttpHeaders:[updater httpHeaders]];
-    [appcast fetchAppcastFromURL:URL inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
+    [appcast fetchAppcastFromURL:URL proxy:proxy inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
         if (error) {
             [self abortUpdateWithError:error];
         } else {
@@ -294,7 +296,7 @@
     }
     SPUURLRequest *urlRequest = [SPUURLRequest URLRequestWithRequest:request];
     NSString *desiredFilename = [NSString stringWithFormat:@"%@ %@", [self.host name], [self.updateItem versionString]];
-    [self.download startPersistentDownloadWithRequest:urlRequest bundleIdentifier:bundleIdentifier desiredFilename:desiredFilename];
+    [self.download startPersistentDownloadWithRequest:urlRequest bundleIdentifier:bundleIdentifier desiredFilename:desiredFilename proxy: self.proxy];
 }
 
 

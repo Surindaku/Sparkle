@@ -33,8 +33,8 @@ SU_EXPORT @interface SUAppcastItem : NSObject
 @property (strong, readonly) NSURL *infoURL;
 
 // Initializes with data from a dictionary provided by the RSS class.
-- (instancetype)initWithDictionary:(NSDictionary *)dict;
-- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString **)error;
+- (instancetype)initWithDictionary:(NSDictionary *)dict basicDomain:(NSString *)basicDomain;
+- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString **)error basicDomain:(NSString *)basicDomain;
 
 @property (getter=isDeltaUpdate, readonly) BOOL deltaUpdate;
 @property (getter=isCriticalUpdate, readonly) BOOL criticalUpdate;

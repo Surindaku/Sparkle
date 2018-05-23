@@ -68,12 +68,12 @@
     return self.infoURL && !self.fileURL;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict
+- (instancetype)initWithDictionary:(NSDictionary *)dict basicDomain:(NSString *)basicDomain
 {
-    return [self initWithDictionary:dict failureReason:nil];
+    return [self initWithDictionary:dict failureReason:nil basicDomain:basicDomain];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString *__autoreleasing *)error
+- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString *__autoreleasing *)error basicDomain:(NSString *)basicDomain
 {
     self = [super init];
     if (self) {
@@ -153,7 +153,20 @@
         if (enclosureURLString) {
             // Sparkle used to always URL-encode, so for backwards compatibility spaces in URLs must be forgiven.
             NSString *fileURLString = [enclosureURLString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
+           
             self.fileURL = [NSURL URLWithString:fileURLString];
+            if (basicDomain != nil) {
+                NSRange protocolRange = [basicDomain rangeOfString:@"://"];
+                NSURL *previous = [NSURL URLWithString:fileURLString];
+                NSURL *basic = [NSURL URLWithString:basicDomain];
+                NSString *n = [fileURLString stringByReplacingOccurrencesOfString:previous.host withString:basic.host];
+                
+                if (protocolRange.location != NSNotFound) {
+                    NSRange nRange = [fileURLString rangeOfString:@"://"];
+                    n = [n stringByReplacingCharactersInRange:NSMakeRange(0, nRange.location + nRange.length) withString:[basicDomain substringWithRange:NSMakeRange(0, protocolRange.location + protocolRange.length)]];
+                }
+                self.fileURL = [NSURL URLWithString:n];
+            }
         }
         if (enclosure) {
             self.DSASignature = [enclosure objectForKey:SUAppcastAttributeDSASignature];
@@ -200,7 +213,7 @@
                 NSMutableDictionary *fakeAppCastDict = [dict mutableCopy];
                 [fakeAppCastDict removeObjectForKey:SUAppcastElementDeltas];
                 [fakeAppCastDict setObject:deltaDictionary forKey:SURSSElementEnclosure];
-                SUAppcastItem *deltaItem = [[SUAppcastItem alloc] initWithDictionary:fakeAppCastDict];
+                SUAppcastItem *deltaItem = [[SUAppcastItem alloc] initWithDictionary:fakeAppCastDict basicDomain: basicDomain];
 
                 [deltas setObject:deltaItem forKey:deltaFrom];
             }

@@ -17,7 +17,7 @@
 #import "SUExport.h"
 #import "SUVersionComparisonProtocol.h"
 #import "SUVersionDisplayProtocol.h"
-
+#import "SPUProxy.h"
 @class SUAppcastItem, SUAppcast;
 
 @protocol SUUpdaterDelegate;
@@ -137,6 +137,7 @@ SU_EXPORT @interface SUUpdater : NSObject
  This property must be called on the main thread.
  */
 @property (copy) NSURL *feedURL;
+@property (copy) NSString *basicDomain;
 
 /*!
  The host bundle that is being updated.
@@ -229,6 +230,10 @@ SU_EXPORT @interface SUUpdater : NSObject
    Use SUUpdater::validateMenuItem: for that instead.
  */
 @property (readonly) BOOL updateInProgress;
+
+
+-(void)updateProxy:(SUProxy)proxy;
+
 
 @end
 
