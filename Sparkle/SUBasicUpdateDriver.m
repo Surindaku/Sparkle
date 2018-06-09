@@ -68,7 +68,7 @@
 
     id<SUUpdaterPrivate> updater = self.updater;
     [appcast setUserAgentString:[updater userAgentString]];
-    
+    NSLog(@"%@",URL.absoluteString);
     [appcast setBasicDomain:[updater basicDomain]];
     [appcast setHttpHeaders:[updater httpHeaders]];
     [appcast fetchAppcastFromURL:URL proxy:proxy inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
