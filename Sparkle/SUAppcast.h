@@ -27,9 +27,6 @@ SU_EXPORT @interface SUAppcast : NSObject
 
 #if __has_feature(objc_generics)
 @property (copy, nullable) NSDictionary<NSString *, NSString *> *httpHeaders;
-#else
-@property (copy, nullable) NSDictionary *httpHeaders;
-#endif
 
 
 
