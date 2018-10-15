@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #endif
 #import "SUExport.h"
-#import "SPUProxy.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @class SUAppcastItem;
@@ -29,7 +28,7 @@ SU_EXPORT @interface SUAppcast : NSObject
 
 
 
-- (void)fetchAppcastFromURL:(NSURL *)url proxy:(SUProxy)proxy inBackground:(BOOL)background completionBlock:(void (^)(NSError *))block;
+- (void)fetchAppcastFromURL:(NSURL *)url inBackground:(BOOL)background completionBlock:(void (^)(NSError *))block;
 - (SUAppcast *)copyWithoutDeltaUpdates;
 
 @property (readonly, copy, nullable) NSArray *items;

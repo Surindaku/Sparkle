@@ -26,7 +26,7 @@
 @synthesize downloadSession = _downloadSession;
 @synthesize download = _download;
 
-- (void)startDownloadWithRequest:(SPUURLRequest *)request proxy:(SUProxy)proxy
+- (void)startDownloadWithRequest:(SPUURLRequest *)request
 {
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
     
@@ -41,16 +41,7 @@
      */
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    if (proxy.hasProxy) {
-        NSMutableDictionary *data=[NSMutableDictionary dictionaryWithDictionary:@{(__bridge NSString *)kCFNetworkProxiesHTTPEnable  : @1,  (__bridge NSString *)kCFNetworkProxiesHTTPSEnable : @1}];
-        data[(__bridge NSString *)kCFNetworkProxiesHTTPSProxy] = proxy.host;
-        data[(__bridge NSString *)kCFNetworkProxiesHTTPSPort]= proxy.port;
-        data[(__bridge NSString *)kCFProxyUsernameKey]= proxy.user;
-        data[(__bridge NSString *)kCFProxyPasswordKey]= proxy.pass;
-        configuration.connectionProxyDictionary = data;
-    }
 
-    
     queue.maxConcurrentOperationCount = 1;
     self.downloadSession = [NSURLSession
                              sessionWithConfiguration:configuration
@@ -60,7 +51,7 @@
     [self.download resume];
 }
 
-- (void)startPersistentDownloadWithRequest:(SPUURLRequest *)request bundleIdentifier:(NSString *)bundleIdentifier desiredFilename:(NSString *)desiredFilename proxy:(SUProxy)proxy
+- (void)startPersistentDownloadWithRequest:(SPUURLRequest *)request bundleIdentifier:(NSString *)bundleIdentifier desiredFilename:(NSString *)desiredFilename
 {
    dispatch_async(dispatch_get_main_queue(), ^{
         if (self.download == nil && self.delegate != nil) {
@@ -72,12 +63,12 @@
             self.desiredFilename = desiredFilename;
             self.bundleIdentifier = bundleIdentifier;
             
-            [self startDownloadWithRequest:request proxy:proxy];
+            [self startDownloadWithRequest:request];
         }
     });
 }
 
-- (void)startTemporaryDownloadWithRequest:(SPUURLRequest *)request proxy:(SUProxy)proxy
+- (void)startTemporaryDownloadWithRequest:(SPUURLRequest *)request
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.download == nil && self.delegate != nil) {
@@ -86,7 +77,7 @@
             self.disabledAutomaticTermination = YES;
             
             self.mode = SPUDownloadModeTemporary;
-            [self startDownloadWithRequest:request proxy:proxy];
+            [self startDownloadWithRequest:request];
         }
     });
 }

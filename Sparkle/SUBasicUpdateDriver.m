@@ -55,9 +55,9 @@
 
 @synthesize updateValidator = _updateValidator;
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost proxy:(SUProxy)proxy
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost
 {
-    [super checkForUpdatesAtURL:URL host:aHost proxy:proxy];
+    [super checkForUpdatesAtURL:URL host:aHost];
 	if ([aHost isRunningOnReadOnlyVolume])
 	{
         [self abortUpdateWithError:[NSError errorWithDomain:SUSparkleErrorDomain code:SURunningFromDiskImageError userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:SULocalizedString(@"%1$@ can't be updated, because it was opened from a read-only or a temporary location. Use Finder to copy %1$@ to the Applications folder, relaunch it from there, and try again.", nil), [aHost name]] }]];
@@ -70,7 +70,7 @@
     [appcast setUserAgentString:[updater userAgentString]];
     [appcast setBasicDomain:[updater basicDomain]];
     [appcast setHttpHeaders:[updater httpHeaders]];
-    [appcast fetchAppcastFromURL:URL proxy:proxy inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
+    [appcast fetchAppcastFromURL:URL inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
         if (error) {
             [self abortUpdateWithError:error];
         } else {
@@ -295,7 +295,7 @@
     }
     SPUURLRequest *urlRequest = [SPUURLRequest URLRequestWithRequest:request];
     NSString *desiredFilename = [NSString stringWithFormat:@"%@ %@", [self.host name], [self.updateItem versionString]];
-    [self.download startPersistentDownloadWithRequest:urlRequest bundleIdentifier:bundleIdentifier desiredFilename:desiredFilename proxy: self.proxy];
+    [self.download startPersistentDownloadWithRequest:urlRequest bundleIdentifier:bundleIdentifier desiredFilename:desiredFilename];
 }
 
 
@@ -358,18 +358,20 @@
     id<SUUpdaterPrivate> updater = self.updater;
     id<SUUnarchiverProtocol> unarchiver = [SUUnarchiver unarchiverForPath:self.downloadPath updatingHostBundlePath:self.host.bundlePath decryptionPassword:updater.decryptionPassword];
     
-    BOOL success;
+    BOOL success = NO;
     if (!unarchiver) {
         SULog(SULogLevelError, @"Error: No valid unarchiver for %@!", self.downloadPath);
-        
-        success = NO;
     } else {
+        self.updateValidator = [[SUUpdateValidator alloc] initWithDownloadPath:self.downloadPath signatures:self.updateItem.signatures host:self.host];
+
         // Currently unsafe archives are the only case where we can prevalidate before extraction, but that could change in the future
-        BOOL needsPrevalidation = [[unarchiver class] unsafeIfArchiveIsNotValidated];
-        
-        self.updateValidator = [[SUUpdateValidator alloc] initWithDownloadPath:self.downloadPath dsaSignature:self.updateItem.DSASignature host:self.host performingPrevalidation:needsPrevalidation];
-        
-        success = self.updateValidator.canValidate;
+        BOOL needsPrevalidation = [[unarchiver class] mustValidateBeforeExtraction];
+
+        if (needsPrevalidation) {
+            success = [self.updateValidator validateDownloadPath];
+        } else {
+            success = YES;
+        }
     }
     
     if (!success) {

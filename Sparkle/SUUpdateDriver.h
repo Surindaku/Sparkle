@@ -10,7 +10,6 @@
 #define SUUPDATEDRIVER_H
 
 #import <Cocoa/Cocoa.h>
-#import "SPUProxy.h"
 extern NSString *const SUUpdateDriverFinishedNotification;
 
 @class SUHost, SUUpdater;
@@ -22,10 +21,9 @@ extern NSString *const SUUpdateDriverFinishedNotification;
 @property (readonly, weak) SUUpdater<SUUpdaterPrivate> *updater;
 
 @property (strong) SUHost *host;
-@property SUProxy proxy;
 
 - (instancetype)initWithUpdater:(id<SUUpdaterPrivate>)updater;
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)host proxy: (SUProxy)proxy;
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)host;
 - (void)abortUpdate;
 /** If there is an update waiting to be installed, show UI indicating so. Return NO otherwise (e.g. if it's not supported). */
 - (BOOL)resumeUpdateInteractively;

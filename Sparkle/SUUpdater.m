@@ -25,7 +25,7 @@
 #include <SystemConfiguration/SystemConfiguration.h>
 #import "SUSystemProfiler.h"
 #import "SUSystemUpdateInfo.h"
-#import "SPUProxy.h"
+#import "SUSignatures.h"
 
 NSString *const SUUpdaterDidFinishLoadingAppCastNotification = @"SUUpdaterDidFinishLoadingAppCastNotification";
 NSString *const SUUpdaterDidFindValidUpdateNotification = @"SUUpdaterDidFindValidUpdateNotification";
@@ -37,7 +37,6 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
 @interface SUUpdater () <SUUpdaterPrivate>
 @property (strong) NSTimer *checkTimer;
 @property (strong) NSBundle *sparkleBundle;
-@property SUProxy proxy;
 
 - (instancetype)initForBundle:(NSBundle *)bundle;
 - (void)startUpdateCycle;
@@ -66,7 +65,6 @@ NSString *const SUUpdaterAppcastNotificationKey = @"SUUpdaterAppCastNotification
 @synthesize sparkleBundle;
 @synthesize decryptionPassword;
 @synthesize updateLastCheckedDate;
-@synthesize proxy;
 
 static NSMutableDictionary *sharedUpdaters = nil;
 static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaultsObservationContext";
@@ -141,7 +139,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 }
 
 -(void)checkIfConfiguredProperly {
-    BOOL hasPublicDSAKey = [self.host publicDSAKey] != nil;
+    BOOL hasPublicDSAKey = self.host.publicKeys.dsaPubKey != nil;
     BOOL isMainBundle = [self.host.bundle isEqualTo:[NSBundle mainBundle]];
     BOOL hostIsCodeSigned = [SUCodeSigningVerifier bundleAtURLIsCodeSigned:self.host.bundle.bundleURL];
     NSURL *feedURL = [self feedURL];
@@ -180,6 +178,15 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
         }
     }
 #endif
+}
+
+-(void)setBasicDomain:(NSString *)bd {
+    NSRange protocolRange = [bd rangeOfString:@"://"];
+    NSString *modified = bd;
+    if (bd != nil && protocolRange.location == NSNotFound) {
+        modified = [NSString stringWithFormat:@"https://%@", bd];
+    }
+    self->_basicDomain = modified;
 }
 
 
@@ -380,7 +387,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 
     NSURL *theFeedURL = [self parameterizedFeedURL];
     if (theFeedURL) // Use a NIL URL to cancel quietly.
-        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host proxy: self.proxy];
+        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host];
     else
         [self.driver abortUpdate];
 }
@@ -504,30 +511,9 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
             n = [n stringByReplacingCharactersInRange:NSMakeRange(0, nRange.location + nRange.length) withString:[self.basicDomain substringWithRange:NSMakeRange(0, protocolRange.location + protocolRange.length)]];
         }
         return [NSURL URLWithString:n];
-    }
-     else
+    } else
         return [NSURL URLWithString:castUrlStr];
-    
 }
-
--(SUProxy)proxySettings {
-    return self.proxy;
-}
-
--(void)updateProxy:(SUProxy)p {
-    self.proxy = p;
-    [self checkForUpdates:self];
-}
-
--(void)setBasicDomain:(NSString *)bd {
-    NSRange protocolRange = [bd rangeOfString:@"://"];
-    NSString *modified = bd;
-    if (bd != nil && protocolRange.location == NSNotFound) {
-        modified = [NSString stringWithFormat:@"https://%@", bd];
-    }
-    self->_basicDomain = modified;
-}
-
 
 - (NSString *)userAgentString
 {

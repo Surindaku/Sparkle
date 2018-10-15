@@ -10,7 +10,6 @@
 #import "SUUpdaterPrivate.h"
 #import "SUHost.h"
 #import "SULog.h"
-#import "SPUProxy.h"
 NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 @interface SUUpdateDriver ()
@@ -29,7 +28,6 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 @synthesize finished;
 @synthesize appcastURL;
 @synthesize automaticallyInstallUpdates;
-@synthesize proxy;
 - (instancetype)initWithUpdater:(id<SUUpdaterPrivate>)anUpdater
 {
     if ((self = [super init])) {
@@ -40,11 +38,10 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 - (NSString *)description { return [NSString stringWithFormat:@"%@ <%@>", [self class], [self.host bundlePath]]; }
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h proxy:(SUProxy)p
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h
 {
     self.appcastURL = URL;
     self.host = h;
-    self.proxy = p;
 }
 
 - (void)abortUpdate

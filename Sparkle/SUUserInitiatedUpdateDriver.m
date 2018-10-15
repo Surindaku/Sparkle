@@ -46,14 +46,14 @@
     self.canceled = YES;
 }
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost proxy:(SUProxy)proxy
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost
 {
     self.checkingController = [[SUStatusController alloc] initWithHost:aHost];
     [[self.checkingController window] center]; // Force the checking controller to load its window.
     [self.checkingController beginActionWithTitle:SULocalizedString(@"Checking for updates...", nil) maxProgressValue:0.0 statusText:nil];
     [self.checkingController setButtonTitle:SULocalizedString(@"Cancel", nil) target:self action:@selector(cancelCheckForUpdates:) isDefault:NO];
     [self.checkingController showWindow:self];
-    [super checkForUpdatesAtURL:URL host:aHost proxy:proxy];
+    [super checkForUpdatesAtURL:URL host:aHost];
 
     // For background applications, obtain focus.
     // Useful if the update check is requested from another app like System Preferences.

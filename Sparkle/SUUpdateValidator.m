@@ -7,20 +7,21 @@
 //
 
 #import "SUUpdateValidator.h"
-#import "SUDSAVerifier.h"
+#import "SUSignatureVerifier.h"
 #import "SUCodeSigningVerifier.h"
 #import "SUInstaller.h"
 #import "SUHost.h"
 #import "SULog.h"
-
+#import "SUSignatures.h"
 
 #include "AppKitPrevention.h"
 
 @interface SUUpdateValidator ()
 
 @property (nonatomic, readonly) SUHost *host;
-@property (nonatomic, readonly) BOOL prevalidatedDsaSignature;
-@property (nonatomic, readonly) NSString *dsaSignature;
+@property (nonatomic) BOOL prevalidatedSignature;
+@property (nonatomic) BOOL downloadPrevalidationFailed;
+@property (strong, nonatomic, readonly) SUSignatures *signatures;
 @property (nonatomic, readonly) NSString *downloadPath;
 
 @end
@@ -28,58 +29,51 @@
 @implementation SUUpdateValidator
 
 @synthesize host = _host;
-@synthesize canValidate = _canValidate;
-@synthesize prevalidatedDsaSignature = _prevalidatedDsaSignature;
-@synthesize dsaSignature = _dsaSignature;
+@synthesize prevalidatedSignature = _prevalidatedSignature;
+@synthesize signatures = _signatures;
+@synthesize downloadPrevalidationFailed = _downloadPrevalidationFailed;
 @synthesize downloadPath = _downloadPath;
 
-- (instancetype)initWithDownloadPath:(NSString *)downloadPath dsaSignature:(NSString *)dsaSignature host:(SUHost *)host performingPrevalidation:(BOOL)performingPrevalidation
+- (instancetype)initWithDownloadPath:(NSString *)downloadPath signatures:(SUSignatures *)signatures host:(SUHost *)host
 {
     self = [super init];
     if (self != nil) {
-        BOOL canValidate;
-        BOOL prevalidatedDsaSignature;
-        if (performingPrevalidation) {
-            NSString *publicDSAKey = host.publicDSAKey;
-
-            if (publicDSAKey == nil) {
-                prevalidatedDsaSignature = NO;
-                SULog(SULogLevelError, @"Failed to validate update before unarchiving because no DSA key was found");
-            } else if (dsaSignature == nil) {
-                prevalidatedDsaSignature = NO;
-                SULog(SULogLevelError, @"Failed to validate update before unarchiving because no DSA signature was found");
-            } else {
-                prevalidatedDsaSignature = [SUDSAVerifier validatePath:downloadPath withEncodedDSASignature:dsaSignature withPublicDSAKey:publicDSAKey];
-                if (!prevalidatedDsaSignature) {
-                    SULog(SULogLevelError, @"DSA signature validation before unarchiving failed for update %@", downloadPath);
-                }
-            }
-
-            canValidate = prevalidatedDsaSignature;
-        } else {
-            prevalidatedDsaSignature = NO;
-            canValidate = YES;
-        }
-
-        _canValidate = canValidate;
-        _prevalidatedDsaSignature = prevalidatedDsaSignature;
         _downloadPath = [downloadPath copy];
-        _dsaSignature = [dsaSignature copy];
+        _signatures = signatures;
         _host = host;
     }
     return self;
 }
 
+- (BOOL)validateDownloadPath {
+    SUPublicKeys *publicKeys = self.host.publicKeys;
+    SUSignatures *signatures = self.signatures;
+
+    if (publicKeys.dsaPubKey == nil) {
+        SULog(SULogLevelError, @"Failed to validate update before unarchiving because no DSA public key was found in the old app");
+    } else if (signatures == nil || signatures.dsaSignature == nil) {
+        SULog(SULogLevelError, @"Failed to validate update before unarchiving because no DSA signature was found");
+    } else {
+        if ([SUSignatureVerifier validatePath:self.downloadPath withSignatures:signatures withPublicKeys:publicKeys]) {
+            self.prevalidatedSignature = YES;
+            return YES;
+        }
+        SULog(SULogLevelError, @"DSA signature validation before unarchiving failed for update %@", self.downloadPath);
+    }
+    self.downloadPrevalidationFailed = YES;
+    return NO;
+}
+
 - (BOOL)validateWithUpdateDirectory:(NSString *)updateDirectory
 {
-    assert(self.canValidate);
+    if (self.downloadPrevalidationFailed) {
+        return NO;
+    }
 
-    NSString *DSASignature = self.dsaSignature;
-    NSString *publicDSAKey = self.host.publicDSAKey;
+    SUSignatures *signatures = self.signatures;
+    SUPublicKeys *publicKeys = self.host.publicKeys;
     NSString *downloadPath = self.downloadPath;
     SUHost *host = self.host;
-
-    BOOL prevalidatedDsaSignature = self.prevalidatedDsaSignature;
 
     BOOL isPackage = NO;
 
@@ -92,18 +86,18 @@
 
     NSURL *installSourceURL = [NSURL fileURLWithPath:installSource];
 
-    if (!prevalidatedDsaSignature) {
+    if (!self.prevalidatedSignature) {
         // Check to see if we have a package or bundle to validate
         if (isPackage) {
             // For package type updates, all we do is check if the DSA signature is valid
-            BOOL validationCheckSuccess = [SUDSAVerifier validatePath:downloadPath withEncodedDSASignature:DSASignature withPublicDSAKey:publicDSAKey];
+            BOOL validationCheckSuccess = [SUSignatureVerifier validatePath:downloadPath withSignatures:signatures withPublicKeys:publicKeys];
             if (!validationCheckSuccess) {
                 SULog(SULogLevelError, @"DSA signature validation of the package failed. The update contains an installer package, and valid DSA signatures are mandatory for all installer packages. The update will be rejected. Sign the installer with a valid DSA key or use an .app bundle update instead.");
             }
             return validationCheckSuccess;
         } else {
             // For application bundle updates, we check both the DSA and Apple code signing signatures
-            return [self validateUpdateForHost:host downloadedToPath:downloadPath newBundleURL:installSourceURL DSASignature:DSASignature];
+            return [self validateUpdateForHost:host downloadedToPath:downloadPath newBundleURL:installSourceURL signatures:signatures];
         }
     } else if (isPackage) {
         // We shouldn't get here because we don't validate packages before extracting them currently
@@ -131,7 +125,7 @@
  *  * old and new Code Signing identity are the same and valid
  *
  */
-- (BOOL)validateUpdateForHost:(SUHost *)host downloadedToPath:(NSString *)downloadedPath newBundleURL:(NSURL *)newBundleURL DSASignature:(NSString *)DSASignature
+- (BOOL)validateUpdateForHost:(SUHost *)host downloadedToPath:(NSString *)downloadedPath newBundleURL:(NSURL *)newBundleURL signatures:(SUSignatures *)signatures
 {
     NSBundle *newBundle = [NSBundle bundleWithURL:newBundleURL];
     if (newBundle == nil) {
@@ -139,24 +133,24 @@
         return NO;
     }
 
-    NSString *publicDSAKey = host.publicDSAKey;
+    SUPublicKeys *publicKeys = host.publicKeys;
 
     SUHost *newHost = [[SUHost alloc] initWithBundle:newBundle];
-    NSString *newPublicDSAKey = newHost.publicDSAKey;
+    SUPublicKeys *newPublicKeys = newHost.publicKeys;
 
     // Downgrade in DSA security should not be possible
-    if (publicDSAKey != nil && newPublicDSAKey == nil) {
+    if (publicKeys.dsaPubKey != nil && newPublicKeys.dsaPubKey == nil) {
         SULog(SULogLevelError, @"A public DSA key is found in the old bundle but no public DSA key is found in the new update. For security reasons, the update will be rejected.");
         return NO;
     }
 
-    BOOL dsaKeysMatch = (publicDSAKey == nil || newPublicDSAKey == nil) ? NO : [publicDSAKey isEqualToString:newPublicDSAKey];
+    BOOL dsaKeysMatch = [publicKeys isEqualToKey:newPublicKeys];
 
     // If the new DSA key differs from the old, then this check is not a security measure, because the new key is not trusted.
     // In that case, the check ensures that the app author has correctly used DSA keys, so that the app will be updateable in the next version.
     // However if the new and old DSA keys are the same, then this is a security measure.
-    if (newPublicDSAKey != nil) {
-        if (![SUDSAVerifier validatePath:downloadedPath withEncodedDSASignature:DSASignature withPublicDSAKey:newPublicDSAKey]) {
+    if (newPublicKeys.dsaPubKey != nil) {
+        if (![SUSignatureVerifier validatePath:downloadedPath withSignatures:signatures withPublicKeys:newPublicKeys]) {
             SULog(SULogLevelError, @"DSA signature validation failed. The update has a public DSA key and is signed with a DSA key, but the %@ doesn't match the signature. The update will be rejected.",
                   dsaKeysMatch ? @"public key" : @"new public key shipped with the update");
             return NO;
@@ -173,7 +167,7 @@
     } else {
         BOOL hostIsCodeSigned = [SUCodeSigningVerifier bundleAtURLIsCodeSigned:host.bundle.bundleURL];
 
-        NSString *dsaStatus = newPublicDSAKey ? @"has a new DSA key that doesn't match the previous one" : (publicDSAKey ? @"removes the DSA key" : @"isn't signed with a DSA key");
+        NSString *dsaStatus = newPublicKeys.dsaPubKey ? @"has a new DSA key that doesn't match the previous one" : (publicKeys.dsaPubKey ? @"removes the DSA key" : @"isn't signed with a DSA key");
         if (!hostIsCodeSigned || !updateIsCodeSigned) {
             NSString *acsStatus = !hostIsCodeSigned ? @"old app hasn't been signed with app Code Signing" : @"new app isn't signed with app Code Signing";
             SULog(SULogLevelError, @"The update archive %@, and the %@. At least one method of signature verification must be valid. The update will be rejected.", dsaStatus, acsStatus);

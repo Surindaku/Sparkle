@@ -18,7 +18,6 @@
 #import "SPUDownloaderDelegate.h"
 #import "SPUDownloaderDeprecated.h"
 #import "SPUDownloaderSession.h"
-#import "SPUProxy.h"
 #include "AppKitPrevention.h"
 
 @interface NSXMLElement (SUAppcastExtensions)
@@ -64,7 +63,7 @@
 @synthesize download;
 @synthesize items;
 
-- (void)fetchAppcastFromURL:(NSURL *)url proxy:(SUProxy)proxy inBackground:(BOOL)background completionBlock:(void (^)(NSError *))block
+- (void)fetchAppcastFromURL:(NSURL *)url inBackground:(BOOL)background completionBlock:(void (^)(NSError *))block
 {
     self.completionBlock = block;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:30.0];
@@ -97,7 +96,7 @@
     }
     
     SPUURLRequest *urlRequest = [SPUURLRequest URLRequestWithRequest:request];
-    [self.download startTemporaryDownloadWithRequest:urlRequest proxy:proxy];
+    [self.download startTemporaryDownloadWithRequest:urlRequest];
 }
 
 - (void)downloaderDidSetDestinationName:(NSString *)__unused destinationName temporaryDirectory:(NSString *)__unused temporaryDirectory
