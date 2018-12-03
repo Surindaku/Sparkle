@@ -7,7 +7,7 @@ Secure and reliable software update framework for Cocoa developers.
 ## Features
 
 * Seamless. There's no mention of Sparkle; your icons and app name are used.
-* Secure. Updates are verified using DSA signatures and Apple Code Signing.
+* Secure. Updates are verified using EdDSA signatures and Apple Code Signing.
 * Fast. Supports delta updates which only patch files that have changed.
 * Easy to install. Sparkle requires no code in your app, and only needs static files on a web server.
 * Supports bundles, preference panes, plugins, and other non-.app software. Can install .pkg files for more complicated products.
@@ -19,8 +19,8 @@ Secure and reliable software update framework for Cocoa developers.
 ## Changes since 1.5b
 
 * Compatibilty with macOS Sierra (and all newer versions).
-* Up-to-date with 10.13 SDK and Xcode 9 (supports macOS 10.7+).
-* Important security fixes.
+* Up-to-date with 10.14 SDK and Xcode 10 (supports macOS 10.7+).
+* Important security fixes and more secure signature algorithm.
 * Cleaned up and modernized code, using ARC and Autolayout.
 * Truly automatic background updates (no UI at all) when user agreed to "Automatically download and install updates in the future."
 * Upgraded and more reliable binary delta and code signing verification.
@@ -39,6 +39,16 @@ Secure and reliable software update framework for Cocoa developers.
 See [getting started guide](https://sparkle-project.org/documentation/). No code is necessary, but a bit of Xcode configuration is required.
 
 ## Development
+
+### Troubleshooting
+
+  * Please check **Console.app**. Sparkle prints detailed information there about all problems it encounters. It often also suggests solutions to the problems, so please read Sparkle's log messages carefully.
+
+  * Use the `generate_appcast` tool which creates appcast files, correct signatures, and delta updates automatically.
+
+  * Make sure the URL specified in [`SUFeedURL`](https://sparkle-project.org/documentation/customization/) is valid (typos/404s are a common error!), and that it uses modern TLS ([test it](https://www.ssllabs.com/ssltest/)).
+
+  * Delete your app's preferences (in `~/Library/Preferences/<your bundle id>`) if you've set another feed URL programmatically via Sparkle's Objective-C interface.
 
 ### API symbols
 
