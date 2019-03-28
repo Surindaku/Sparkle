@@ -6,10 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SUExport.h"
 
 @class SUPublicKeys;
 
-@interface SUHost : NSObject
+SU_EXPORT @interface SUHost : NSObject
 
 @property (strong, readonly) NSBundle *bundle;
 

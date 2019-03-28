@@ -28,5 +28,8 @@
 #import "SPUDownloaderSession.h"
 #import "SPUURLRequest.h"
 #import "SUCodeSigningVerifier.h"
-
+#import "SUUpdateDriver.h"
+#import "SUBasicUpdateDriver.h"
+#import "SUHost.h"
+#import "SUUpdaterPrivate.h"
 #endif

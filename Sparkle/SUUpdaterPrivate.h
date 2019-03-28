@@ -7,8 +7,8 @@
 //
 
 @protocol SUUpdaterDelegate;
-
-@protocol SUUpdaterPrivate <NSObject>
+#import "SUExport.h"
+SU_EXPORT @protocol SUUpdaterPrivate <NSObject>
 
 @property (unsafe_unretained) IBOutlet id<SUUpdaterDelegate> delegate;
 

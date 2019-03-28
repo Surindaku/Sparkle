@@ -261,6 +261,7 @@
 
 - (void)downloadUpdate
 {
+    NSLog(@"host: %@", self.host);
     NSString *bundleIdentifier = self.host.bundle.bundleIdentifier;
     assert(bundleIdentifier != nil);
     
