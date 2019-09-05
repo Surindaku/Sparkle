@@ -17,8 +17,6 @@
 @class SUAppcast, SUAppcastItem, SUHost, SPUDownloadData;
 SU_EXPORT @interface SUBasicUpdateDriver : SUUpdateDriver <SPUDownloaderDelegate>
 
-@property (strong, readonly) SUAppcastItem *updateItem;
-@property (strong, readonly) SPUDownloader *download;
 @property (copy, readonly) NSString *downloadPath;
 
 - (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost;

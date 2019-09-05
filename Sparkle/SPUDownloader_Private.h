@@ -10,7 +10,7 @@
 #define SPUDownloader_Private_h
 
 #import "SPUDownloaderDelegate.h"
-
+#import "SUExport.h"
 typedef NS_ENUM(NSUInteger, SPUDownloadMode)
 {
     SPUDownloadModePersistent,
@@ -19,10 +19,9 @@ typedef NS_ENUM(NSUInteger, SPUDownloadMode)
 
 static NSString *SUDownloadingReason = @"Downloading update related file";
 
-@interface SPUDownloader ()
+SU_EXPORT @interface SPUDownloader ()
 
 // Delegate is intentionally strongly referenced; see header
-@property (nonatomic) id <SPUDownloaderDelegate> delegate;
 @property (nonatomic, copy) NSString *bundleIdentifier;
 @property (nonatomic, copy) NSString *desiredFilename;
 @property (nonatomic, copy) NSString *downloadFilename;

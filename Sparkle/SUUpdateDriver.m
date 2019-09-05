@@ -21,7 +21,8 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 @end
 
 @implementation SUUpdateDriver
-
+@synthesize download;
+@synthesize updateItem;
 @synthesize updater;
 @synthesize host;
 @synthesize interruptible;

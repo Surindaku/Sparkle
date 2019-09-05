@@ -13,8 +13,13 @@
 #endif
 #import "SPUDownloader.h"
 #import "SPUDownloaderProtocol.h"
+#import "SUExport.h"
 
 NS_CLASS_AVAILABLE(NSURLSESSION_AVAILABLE, 7_0)
-@interface SPUDownloaderSession : SPUDownloader <SPUDownloaderProtocol>
-
+SU_EXPORT @interface SPUDownloaderSession : SPUDownloader <SPUDownloaderProtocol>
+@property (nonatomic, readwrite) NSURLSessionDownloadTask *download;
+- (void)URLSession:(NSURLSession *)__unused session downloadTask:(NSURLSessionDownloadTask *)__unused downloadTask didFinishDownloadingToURL:(NSURL *)location;
+-(NSString *)suggestedFilename;
+-(BOOL)moveItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError *)error;
+- (void)startDownloadWithRequest:(SPUURLRequest *)request;
 @end

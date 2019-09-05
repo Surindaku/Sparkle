@@ -31,8 +31,6 @@
 
 @interface SUBasicUpdateDriver ()
 
-@property (strong) SUAppcastItem *updateItem;
-@property (strong) SPUDownloader *download;
 @property (copy) NSString *downloadPath;
 
 @property (strong) SUAppcastItem *nonDeltaUpdateItem;
@@ -45,8 +43,6 @@
 
 @implementation SUBasicUpdateDriver
 
-@synthesize updateItem;
-@synthesize download;
 @synthesize downloadPath;
 
 @synthesize nonDeltaUpdateItem;

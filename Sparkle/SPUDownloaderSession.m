@@ -17,7 +17,6 @@
 @interface SPUDownloaderSession () <NSURLSessionDelegate>
 
 @property (nonatomic) NSURLSession *downloadSession;
-@property (nonatomic) NSURLSessionDownloadTask *download;
 
 @end
 
@@ -100,14 +99,15 @@
                 
                 [self.delegate downloaderDidFailWithError:error];
             } else {
-                NSString *name = self.download.response.suggestedFilename;
+                NSString *name = self.suggestedFilename;
                 if (!name) {
                     name = location.lastPathComponent; // This likely contains nothing useful to identify the file (e.g. CFNetworkDownload_87LVIz.tmp)
                 }
                 NSString *toPath = [downloadFileNameDirectory stringByAppendingPathComponent:name];
                 NSString *fromPath = location.path; // suppress moveItemAtPath: non-null warning
                 NSError *error = nil;
-                if ([[NSFileManager defaultManager] moveItemAtPath:fromPath toPath:toPath error:&error]) {
+                [[NSFileManager defaultManager] removeItemAtPath:toPath error:nil];
+                if ([self moveItemAtPath:fromPath toPath:toPath error:error]) {
                     self.downloadFilename = toPath;
                     [self.delegate downloaderDidSetDestinationName:name temporaryDirectory:downloadFileNameDirectory];
                     [self downloadDidFinish];
@@ -118,6 +118,11 @@
         }
     }
 }
+
+- (BOOL)moveItemAtPath:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError *)error {
+    return [[NSFileManager defaultManager] moveItemAtPath:fromPath toPath:toPath error:&error];
+}
+
 
 - (void)URLSession:(NSURLSession *)__unused session downloadTask:(NSURLSessionDownloadTask *)__unused downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)__unused totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
@@ -130,6 +135,10 @@
     if (self.mode == SPUDownloadModePersistent && bytesWritten >= 0) {
         [self.delegate downloaderDidReceiveDataOfLength:(uint64_t)bytesWritten];
     }
+}
+
+-(NSString *)suggestedFilename {
+    return self.download.response.suggestedFilename;
 }
 
 - (void)URLSession:(NSURLSession *)__unused session task:(NSURLSessionTask *)__unused task didCompleteWithError:(NSError *)error

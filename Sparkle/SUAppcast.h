@@ -27,7 +27,7 @@ SU_EXPORT @interface SUAppcast : NSObject
 @property (copy, nullable) NSDictionary<NSString *, NSString *> *httpHeaders;
 
 
-
+-(NSArray *)parseAppcastItemsFromXMLData:(NSData *)appcastData error:(NSError *__autoreleasing*)errorp;
 - (void)fetchAppcastFromURL:(NSURL *)url inBackground:(BOOL)background completionBlock:(void (^)(NSError * __nullable))block;
 - (SUAppcast *)copyWithoutDeltaUpdates;
 
