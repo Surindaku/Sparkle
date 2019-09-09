@@ -105,7 +105,7 @@
                 }
                 NSString *toPath = [downloadFileNameDirectory stringByAppendingPathComponent:name];
                 NSString *fromPath = location.path; // suppress moveItemAtPath: non-null warning
-                NSError *error = nil;
+                NSError *error = [[NSError alloc] initWithDomain:NSURLErrorDomain code:0 userInfo:nil];
                 [[NSFileManager defaultManager] removeItemAtPath:toPath error:nil];
                 if ([self moveItemAtPath:fromPath toPath:toPath error:error]) {
                     self.downloadFilename = toPath;
