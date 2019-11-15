@@ -51,20 +51,19 @@
 
 @synthesize updateValidator = _updateValidator;
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost domain:(NSString *)domain
 {
-    [super checkForUpdatesAtURL:URL host:aHost];
+    [super checkForUpdatesAtURL:URL host:aHost domain: domain];
 	if ([aHost isRunningOnReadOnlyVolume])
 	{
         [self abortUpdateWithError:[NSError errorWithDomain:SUSparkleErrorDomain code:SURunningFromDiskImageError userInfo:@{ NSLocalizedDescriptionKey: [NSString stringWithFormat:SULocalizedString(@"%1$@ can't be updated, because it was opened from a read-only or a temporary location. Use Finder to copy %1$@ to the Applications folder, relaunch it from there, and try again.", nil), [aHost name]] }]];
         return;
     }
 
-    SUAppcast *appcast = [[SUAppcast alloc] init];
+    SUAppcast *appcast = [[SUAppcast alloc] initWithDomain:domain];
 
     id<SUUpdaterPrivate> updater = self.updater;
     [appcast setUserAgentString:[updater userAgentString]];
-    [appcast setBasicDomain:[updater basicDomain]];
     [appcast setHttpHeaders:[updater httpHeaders]];
     [appcast fetchAppcastFromURL:URL inBackground:self.downloadsAppcastInBackground completionBlock:^(NSError *error) {
         if (error) {
@@ -116,11 +115,17 @@
 
 + (BOOL)hostSupportsItem:(SUAppcastItem *)ui
 {
+    if (ui.forbidden) {
+        return NO;
+    }
+    
     BOOL osOK = [ui isMacOsUpdate];
 	if (([ui minimumSystemVersion] == nil || [[ui minimumSystemVersion] isEqualToString:@""]) &&
         ([ui maximumSystemVersion] == nil || [[ui maximumSystemVersion] isEqualToString:@""])) {
         return osOK;
     }
+    
+  
 
     BOOL minimumVersionOK = TRUE;
     BOOL maximumVersionOK = TRUE;

@@ -32,13 +32,20 @@ SU_EXPORT @interface SUAppcastItem : NSObject
 @property (copy, readonly) NSString *displayVersionString;
 @property (copy, readonly) NSDictionary *deltaUpdates;
 @property (strong, readonly) NSURL *infoURL;
+    
+    
+@property (strong, readonly) NSString *internalUrl;
+@property (strong, readonly) NSString *fileName;
+@property (strong, readonly) NSString *env;
+@property (getter=isCritical, readonly) BOOL critical;
+@property (getter=isForbidden, readonly) BOOL forbidden;
+
 
 // Initializes with data from a dictionary provided by the RSS class.
-- (instancetype)initWithDictionary:(NSDictionary *)dict basicDomain:(NSString *)basicDomain;
-- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString **)error basicDomain:(NSString *)basicDomain;
+- (instancetype)initWithDictionary:(NSDictionary *)dict domain: (NSString *)domain;
+- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString **)error domain: (NSString *)domain;
 
 @property (getter=isDeltaUpdate, readonly) BOOL deltaUpdate;
-@property (getter=isCriticalUpdate, readonly) BOOL criticalUpdate;
 @property (getter=isMacOsUpdate, readonly) BOOL macOsUpdate;
 @property (getter=isInformationOnlyUpdate, readonly) BOOL informationOnlyUpdate;
 

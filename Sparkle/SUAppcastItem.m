@@ -28,6 +28,13 @@
 @property (copy, readwrite) NSDictionary *deltaUpdates;
 @property (strong, readwrite) NSURL *infoURL;
 @property (readwrite, copy) NSDictionary *propertiesDictionary;
+    
+@property (strong, readwrite) NSString *internalUrl;
+@property (strong, readwrite) NSString *fileName;
+@property (strong, readwrite) NSString *env;
+    
+@property (nonatomic, readwrite) BOOL critical;
+@property (nonatomic, readwrite) BOOL forbidden;
 @end
 
 @implementation SUAppcastItem
@@ -46,18 +53,20 @@
 @synthesize versionString;
 @synthesize osString;
 @synthesize propertiesDictionary;
-
+@synthesize env;
+@synthesize fileName;
+@synthesize internalUrl;
+    
+@synthesize critical;
+@synthesize forbidden;
+    
 - (BOOL)isDeltaUpdate
 {
     NSDictionary *rssElementEnclosure = [self.propertiesDictionary objectForKey:SURSSElementEnclosure];
     return [rssElementEnclosure objectForKey:SUAppcastAttributeDeltaFrom] != nil;
 }
 
-- (BOOL)isCriticalUpdate
-{
-    return [(NSArray *)[self.propertiesDictionary objectForKey:SUAppcastElementTags] containsObject:SUAppcastElementCriticalUpdate];
-}
-
+    
 - (BOOL)isMacOsUpdate
 {
     return self.osString == nil || [self.osString isEqualToString:SUAppcastAttributeValueMacOS];
@@ -68,12 +77,12 @@
     return self.infoURL && !self.fileURL;
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict basicDomain:(NSString *)basicDomain
+- (instancetype)initWithDictionary:(NSDictionary *)dict domain: (NSString *)domain
 {
-    return [self initWithDictionary:dict failureReason:nil basicDomain:basicDomain];
+    return [self initWithDictionary:dict failureReason:nil domain: domain];
 }
 
-- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString *__autoreleasing *)error basicDomain:(NSString *)basicDomain
+- (instancetype)initWithDictionary:(NSDictionary *)dict failureReason:(NSString *__autoreleasing *)error domain:(NSString *)domain
 {
     self = [super init];
     if (self) {
@@ -114,6 +123,7 @@
         self.title = [dict objectForKey:SURSSElementTitle];
         self.dateString = [dict objectForKey:SURSSElementPubDate];
         self.itemDescription = [dict objectForKey:SURSSElementDescription];
+        
 
         NSString *theInfoURL = [dict objectForKey:SURSSElementLink];
         if (theInfoURL) {
@@ -155,22 +165,22 @@
             NSString *fileURLString = [enclosureURLString stringByReplacingOccurrencesOfString:@" " withString:@"%20"];
            
             self.fileURL = [NSURL URLWithString:fileURLString];
-            if (basicDomain != nil) {
-                NSRange protocolRange = [basicDomain rangeOfString:@"://"];
-                NSURL *previous = [NSURL URLWithString:fileURLString];
-                NSURL *basic = [NSURL URLWithString:basicDomain];
-                NSString *n = [fileURLString stringByReplacingOccurrencesOfString:previous.host withString:basic.host];
-                
-                if (protocolRange.location != NSNotFound) {
-                    NSRange nRange = [fileURLString rangeOfString:@"://"];
-                    n = [n stringByReplacingCharactersInRange:NSMakeRange(0, nRange.location + nRange.length) withString:[basicDomain substringWithRange:NSMakeRange(0, protocolRange.location + protocolRange.length)]];
-                }
-                self.fileURL = [NSURL URLWithString:n];
-            }
         }
         if (enclosure) {
             self.signatures = [[SUSignatures alloc] initWithDsa:[enclosure objectForKey:SUAppcastAttributeDSASignature] ed:[enclosure objectForKey:SUAppcastAttributeEDSignature]];
             self.osString = [enclosure objectForKey:SUAppcastAttributeOsType];
+            self.fileName = [enclosure objectForKey:SUAppcastAttributeFileName];
+            self.env = [enclosure objectForKey:SUAppcastAttributeEnv];
+            self.internalUrl = [enclosure objectForKey:SUAppcastAttributeInternalUrl];
+            NSString *c = [enclosure objectForKey:SUAppcastAttributeCritical];
+            NSString *f = [enclosure objectForKey:SUAppcastAttributeForbidden];
+            self.critical = [c isEqualToString:@"true"] ? YES : NO;
+            self.forbidden = [f isEqualToString:@"true"] ? YES : NO;
+        }
+        
+        if (self.env && domain && self.fileName) {
+            NSString *fileURLString = [NSString stringWithFormat:@"https://%@/%@/%@", domain, self.env, self.fileName];
+            self.fileURL = [NSURL URLWithString:fileURLString];
         }
 
         self.versionString = newVersion;
@@ -213,7 +223,7 @@
                 NSMutableDictionary *fakeAppCastDict = [dict mutableCopy];
                 [fakeAppCastDict removeObjectForKey:SUAppcastElementDeltas];
                 [fakeAppCastDict setObject:deltaDictionary forKey:SURSSElementEnclosure];
-                SUAppcastItem *deltaItem = [[SUAppcastItem alloc] initWithDictionary:fakeAppCastDict basicDomain: basicDomain];
+                SUAppcastItem *deltaItem = [[SUAppcastItem alloc] initWithDictionary:fakeAppCastDict domain: nil];
 
                 [deltas setObject:deltaItem forKey:deltaFrom];
             }

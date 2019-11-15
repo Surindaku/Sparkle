@@ -21,9 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 SU_EXPORT @interface SUAppcast : NSObject
 
 @property (copy, nullable) NSString *userAgentString;
-@property (copy, nullable) NSString *basicDomain;
 
 
+-(id)initWithDomain:(NSString *)domain;
+    
 @property (copy, nullable) NSDictionary<NSString *, NSString *> *httpHeaders;
 
 

@@ -73,7 +73,6 @@ extern NSString *const SUAppcastAttributeOsType;
 
 
 
-extern NSString *const SUAppcastElementCriticalUpdate;
 extern NSString *const SUAppcastElementDeltas;
 extern NSString *const SUAppcastElementMinimumSystemVersion;
 extern NSString *const SUAppcastElementMaximumSystemVersion;
@@ -88,5 +87,11 @@ extern NSString *const SURSSElementEnclosure;
 extern NSString *const SURSSElementLink;
 extern NSString *const SURSSElementPubDate;
 extern NSString *const SURSSElementTitle;
+
+extern NSString *const SUAppcastAttributeCritical;
+extern NSString *const SUAppcastAttributeForbidden;
+extern NSString *const SUAppcastAttributeEnv;
+extern NSString *const SUAppcastAttributeFileName;
+extern NSString *const SUAppcastAttributeInternalUrl;
 
 #endif

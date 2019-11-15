@@ -32,7 +32,7 @@ SU_EXPORT @interface SUUpdateDriver : NSObject
 @property (strong) SUHost *host;
 
 - (instancetype)initWithUpdater:(id<SUUpdaterPrivate>)updater;
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)host;
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)host domain:(NSString *)domain;
 - (void)abortUpdate;
 /** If there is an update waiting to be installed, show UI indicating so. Return NO otherwise (e.g. if it's not supported). */
 - (BOOL)resumeUpdateInteractively;

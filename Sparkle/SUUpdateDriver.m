@@ -39,7 +39,7 @@ NSString *const SUUpdateDriverFinishedNotification = @"SUUpdateDriverFinished";
 
 - (NSString *)description { return [NSString stringWithFormat:@"%@ <%@>", [self class], [self.host bundlePath]]; }
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)h domain:(NSString *)domain
 {
     self.appcastURL = URL;
     self.host = h;

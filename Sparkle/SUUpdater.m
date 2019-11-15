@@ -173,14 +173,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 #endif
 }
 
--(void)setBasicDomain:(NSString *)bd {
-    NSRange protocolRange = [bd rangeOfString:@"://"];
-    NSString *modified = bd;
-    if (bd != nil && protocolRange.location == NSNotFound) {
-        modified = [NSString stringWithFormat:@"https://%@", bd];
-    }
-    self->_basicDomain = modified;
-}
+
 
 
 // This will be used when the updater is instantiated in a nib such as MainMenu
@@ -380,7 +373,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 
     NSURL *theFeedURL = [self parameterizedFeedURL];
     if (theFeedURL) // Use a NIL URL to cancel quietly.
-        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host];
+        [self.driver checkForUpdatesAtURL:theFeedURL host:self.host domain: nil];
     else
         [self.driver abortUpdate];
 }
@@ -492,19 +485,7 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     NSString *castUrlStr = [appcastString stringByTrimmingCharactersInSet:quoteSet];
     if (!castUrlStr || [castUrlStr length] == 0)
         return nil;
-    else if (self.basicDomain != nil) {
-        
-        NSRange protocolRange = [self.basicDomain rangeOfString:@"://"];
-        NSURL *previous = [NSURL URLWithString:castUrlStr];
-        NSURL *basic = [NSURL URLWithString:self.basicDomain];
-        NSString *n = [castUrlStr stringByReplacingOccurrencesOfString:previous.host withString:basic.host];
-        
-        if (protocolRange.location != NSNotFound) {
-            NSRange nRange = [castUrlStr rangeOfString:@"://"];
-            n = [n stringByReplacingCharactersInRange:NSMakeRange(0, nRange.location + nRange.length) withString:[self.basicDomain substringWithRange:NSMakeRange(0, protocolRange.location + protocolRange.length)]];
-        }
-        return [NSURL URLWithString:n];
-    } else
+    else
         return [NSURL URLWithString:castUrlStr];
 }
 

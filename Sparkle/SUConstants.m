@@ -61,7 +61,7 @@ NSString *const SUAppcastAttributeShortVersionString = @"sparkle:shortVersionStr
 NSString *const SUAppcastAttributeVersion = @"sparkle:version";
 NSString *const SUAppcastAttributeOsType = @"sparkle:os";
 
-NSString *const SUAppcastElementCriticalUpdate = @"sparkle:criticalUpdate";
+
 NSString *const SUAppcastElementDeltas = @"sparkle:deltas";
 NSString *const SUAppcastElementMinimumSystemVersion = @"sparkle:minimumSystemVersion";
 NSString *const SUAppcastElementMaximumSystemVersion = @"sparkle:maximumSystemVersion";
@@ -76,3 +76,10 @@ NSString *const SURSSElementEnclosure = @"enclosure";
 NSString *const SURSSElementLink = @"link";
 NSString *const SURSSElementPubDate = @"pubDate";
 NSString *const SURSSElementTitle = @"title";
+
+
+NSString *const SUAppcastAttributeCritical = @"critical";
+NSString *const SUAppcastAttributeForbidden = @"forbidden";
+NSString *const SUAppcastAttributeEnv = @"env";
+NSString *const SUAppcastAttributeFileName = @"fileName";
+NSString *const SUAppcastAttributeInternalUrl = @"internalUrl";

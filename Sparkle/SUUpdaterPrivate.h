@@ -15,7 +15,6 @@ SU_EXPORT @protocol SUUpdaterPrivate <NSObject>
 @property (unsafe_unretained) IBOutlet id<SUUpdaterDelegate> delegate;
 
 @property (nonatomic, copy) NSString *userAgentString;
-@property (nonatomic, copy) NSString *basicDomain;
 @property (copy) NSDictionary *httpHeaders;
 
 @property (nonatomic, copy) NSString *decryptionPassword;

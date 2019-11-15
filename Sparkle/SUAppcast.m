@@ -49,6 +49,7 @@
 @property (strong) void (^completionBlock)(NSError *);
 @property (strong) SPUDownloader *download;
 @property (copy) NSArray *items;
+@property (strong, nullable) NSString *domain;
 - (void)reportError:(NSError *)error;
 - (NSXMLNode *)bestNodeInNodes:(NSArray *)nodes;
 
@@ -58,10 +59,18 @@
 
 @synthesize completionBlock;
 @synthesize userAgentString;
-@synthesize basicDomain;
 @synthesize httpHeaders;
 @synthesize download;
 @synthesize items;
+@synthesize domain;
+    
+-(id)initWithDomain:(NSString *)atDomain {
+    self = [super init];
+    if (self) {
+        self.domain = atDomain;
+    }
+    return self;
+}
 
 - (void)fetchAppcastFromURL:(NSURL *)url inBackground:(BOOL)background completionBlock:(void (^)( NSError * _Nullable ))block
 {
@@ -279,7 +288,7 @@
         }
 
         NSString *errString;
-        SUAppcastItem *anItem = [[SUAppcastItem alloc] initWithDictionary:dict failureReason:&errString basicDomain: self.basicDomain];
+        SUAppcastItem *anItem = [[SUAppcastItem alloc] initWithDictionary:dict failureReason:&errString domain: self.domain];
         if (anItem) {
             [appcastItems addObject:anItem];
 		}

@@ -217,7 +217,7 @@ static NSString *const SUUpdateAlertTouchBarIndentifier = @"" SPARKLE_BUNDLE_IDE
         [self.automaticallyInstallUpdatesButton removeFromSuperview];
     }
 
-    if ([self.updateItem isCriticalUpdate]) {
+    if ([self.updateItem isCritical]) {
         self.skipButton.enabled = NO;
     }
 

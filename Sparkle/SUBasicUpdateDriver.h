@@ -19,7 +19,7 @@ SU_EXPORT @interface SUBasicUpdateDriver : SUUpdateDriver <SPUDownloaderDelegate
 
 @property (copy, readonly) NSString *downloadPath;
 
-- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost;
+- (void)checkForUpdatesAtURL:(NSURL *)URL host:(SUHost *)aHost domain:(NSString *)domain;
 
 - (BOOL)isItemNewer:(SUAppcastItem *)ui;
 + (BOOL)hostSupportsItem:(SUAppcastItem *)ui;
