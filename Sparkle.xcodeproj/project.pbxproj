@@ -2640,6 +2640,123 @@
 			};
 			name = ReleaseAppStore;
 		};
+		A7F282BE238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
+			buildSettings = {
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Github;
+		};
+		A7F282BF238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Github;
+		};
+		A7F282C0238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D20D94A70100DD942E /* ConfigTestAppRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C1238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA3AAF391050B273004B3130 /* ConfigUnitTestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C2238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D06E8F30FD68D21005AE3F6 /* ConfigBinaryDeltaRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C3238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FA1941D40D94A70100DD942E /* ConfigRelaunchRelease.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = 6N38VWS5BX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+			};
+			name = Github;
+		};
+		A7F282C4238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C5238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C6238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C7238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 729F11001C65A9B500DFCCC5 /* ConfigUITestRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282C8238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 722954C81D04E89500ECF9CA /* ConfigFileop.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				DEVELOPMENT_TEAM = 6N38VWS5BX;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Github;
+		};
+		A7F282C9238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7205C4341E12C66D00E370AE /* ConfigGenerateAppcastRelease.xcconfig */;
+			buildSettings = {
+			};
+			name = Github;
+		};
+		A7F282CA238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AB8F1A9214DA85900A1187F /* ConfigGenerateKeysRelease.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 4.2;
+			};
+			name = Github;
+		};
+		A7F282CB238EAA0800742C20 /* Github */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5AB8F1A9214DA85900A1187F /* ConfigGenerateKeysRelease.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Github;
+		};
 		D01E1EDD22B2610100AD6DAE /* HockeyappMacAlpha */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA1941CC0D94A70100DD942E /* ConfigCommonRelease.xcconfig */;
@@ -3114,6 +3231,7 @@
 				D01E1EE422B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED4215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE2215A915900995AFE /* DebugAppStore */,
+				A7F282C5238EAA0800742C20 /* Github */,
 				D0FFCEC6215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07B2379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3126,6 +3244,7 @@
 				D01E1EE322B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED3215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE1215A915900995AFE /* DebugAppStore */,
+				A7F282C4238EAA0800742C20 /* Github */,
 				D0FFCEC5215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07A2379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3138,6 +3257,7 @@
 				D01E1EE522B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED5215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE3215A915900995AFE /* DebugAppStore */,
+				A7F282C6238EAA0800742C20 /* Github */,
 				D0FFCEC7215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07C2379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3150,6 +3270,7 @@
 				D01E1EDE22B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCECE215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEDC215A915900995AFE /* DebugAppStore */,
+				A7F282BF238EAA0800742C20 /* Github */,
 				D0FFCEC0215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0752379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3162,6 +3283,7 @@
 				D01E1EDD22B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCECD215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEDB215A915900995AFE /* DebugAppStore */,
+				A7F282BE238EAA0800742C20 /* Github */,
 				D0FFCEBF215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0742379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3174,6 +3296,7 @@
 				D01E1EE222B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED2215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE0215A915900995AFE /* DebugAppStore */,
+				A7F282C3238EAA0800742C20 /* Github */,
 				D0FFCEC4215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0792379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3186,6 +3309,7 @@
 				D01E1EEA22B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCEDA215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE8215A915900995AFE /* DebugAppStore */,
+				A7F282CB238EAA0800742C20 /* Github */,
 				D0FFCECC215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0812379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3198,6 +3322,7 @@
 				D01E1EE822B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED8215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE6215A915900995AFE /* DebugAppStore */,
+				A7F282C9238EAA0800742C20 /* Github */,
 				D0FFCECA215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07F2379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3210,6 +3335,7 @@
 				D01E1EE922B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED9215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE7215A915900995AFE /* DebugAppStore */,
+				A7F282CA238EAA0800742C20 /* Github */,
 				D0FFCECB215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0802379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3222,6 +3348,7 @@
 				D01E1EE122B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED1215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEDF215A915900995AFE /* DebugAppStore */,
+				A7F282C2238EAA0800742C20 /* Github */,
 				D0FFCEC3215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0782379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3234,6 +3361,7 @@
 				D01E1EE022B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED0215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEDE215A915900995AFE /* DebugAppStore */,
+				A7F282C1238EAA0800742C20 /* Github */,
 				D0FFCEC2215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0772379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3246,6 +3374,7 @@
 				D01E1EDF22B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCECF215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEDD215A915900995AFE /* DebugAppStore */,
+				A7F282C0238EAA0800742C20 /* Github */,
 				D0FFCEC1215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB0762379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3258,6 +3387,7 @@
 				D01E1EE722B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED7215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE5215A915900995AFE /* DebugAppStore */,
+				A7F282C8238EAA0800742C20 /* Github */,
 				D0FFCEC9215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07E2379A095005F55AE /* ReleaseAppStore */,
 			);
@@ -3270,6 +3400,7 @@
 				D01E1EE622B2610100AD6DAE /* HockeyappMacAlpha */,
 				D0FFCED6215A913000995AFE /* DebugHockeyapp */,
 				D0FFCEE4215A915900995AFE /* DebugAppStore */,
+				A7F282C7238EAA0800742C20 /* Github */,
 				D0FFCEC8215A912000995AFE /* ReleaseHockeyapp */,
 				A74EB07D2379A095005F55AE /* ReleaseAppStore */,
 			);
