@@ -178,7 +178,7 @@
             self.forbidden = [f isEqualToString:@"true"] ? YES : NO;
         }
         
-        if (self.env && domain && self.fileName) {
+        if (self.env && domain.length > 0 && self.fileName) {
             NSString *fileURLString = [NSString stringWithFormat:@"https://%@/%@/%@", domain, self.env, self.fileName];
             self.fileURL = [NSURL URLWithString:fileURLString];
         }

@@ -80,6 +80,6 @@ NSString *const SURSSElementTitle = @"title";
 
 NSString *const SUAppcastAttributeCritical = @"critical";
 NSString *const SUAppcastAttributeForbidden = @"forbidden";
-NSString *const SUAppcastAttributeEnv = @"env";
+NSString *const SUAppcastAttributeEnv = @"environment";
 NSString *const SUAppcastAttributeFileName = @"fileName";
 NSString *const SUAppcastAttributeInternalUrl = @"internalUrl";
