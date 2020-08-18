@@ -475,7 +475,11 @@
 - (void)installWithToolAndRelaunch:(BOOL)relaunch displayingUserInterface:(BOOL)showUI
 {
     assert(self.updateItem);
-    assert(self.updateValidator);
+    
+    if (self.updateValidator == nil) {
+        [self abortUpdateWithError:[NSError errorWithDomain:SUSparkleErrorDomain code:SUSignatureError userInfo:@{}]];
+        return;
+    }
     
     BOOL validationCheckSuccess = [self.updateValidator validateWithUpdateDirectory:self.tempDir];
     if (!validationCheckSuccess) {
