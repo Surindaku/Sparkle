@@ -616,7 +616,9 @@
 // Note: this is overridden by the automatic update driver to not terminate in some cases
 - (void)terminateApp
 {
-    [NSApp terminate:self];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSApp terminate:self];
+    });
 }
 
 - (void)cleanUpDownload
