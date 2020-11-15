@@ -2537,6 +2537,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2574,6 +2575,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = ReleaseAppStore;
 		};
@@ -2654,6 +2656,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2693,6 +2696,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = Github;
 		};
@@ -2773,6 +2777,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2810,6 +2815,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = HockeyappMacAlpha;
 		};
@@ -2890,6 +2896,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2927,6 +2934,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = ReleaseHockeyapp;
 		};
@@ -3007,6 +3015,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -3044,6 +3053,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = DebugHockeyapp;
 		};
@@ -3124,6 +3134,7 @@
 			baseConfigurationReference = FA1941D50D94A70100DD942E /* ConfigFrameworkRelease.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3163,6 +3174,7 @@
 				DEVELOPMENT_TEAM = 6N38VWS5BX;
 				ENABLE_HARDENED_RUNTIME = YES;
 				OTHER_CODE_SIGN_FLAGS = "--timestamp";
+				SDKROOT = macosx;
 			};
 			name = DebugAppStore;
 		};
